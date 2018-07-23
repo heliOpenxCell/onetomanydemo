@@ -1,20 +1,19 @@
 package com.example.relationship.onetomanyAppDemo.controller;
 
+import com.example.relationship.onetomanyAppDemo.model.Comment;
 import com.example.relationship.onetomanyAppDemo.model.Post;
 import com.example.relationship.onetomanyAppDemo.service.PostServiceProvider;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import java.util.List;
 
-//https://www.callicoder.com/hibernate-spring-boot-jpa-one-to-many-mapping-example/#1-auditmodel
+// https://www.callicoder.com/hibernate-spring-boot-jpa-one-to-many-mapping-example/#1-auditmodel
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/api")
 public class PostController {
 
     @Autowired
@@ -38,6 +37,11 @@ public class PostController {
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
        return postService.deletePost(postId);
+    }
+
+    @GetMapping("/posts/{postId}")
+    public List<Comment> getAllComments(@PathVariable Long postId){
+        return postService.getAllComments(postId);
     }
 
 }

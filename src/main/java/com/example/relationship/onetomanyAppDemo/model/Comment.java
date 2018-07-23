@@ -1,19 +1,31 @@
 package com.example.relationship.onetomanyAppDemo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
+import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Comments")
-public class Comment extends AuditModel {
 
-    //The default depends on the cardinality of the relationship. All to-one relationships use FetchType.EAGER and all to-many relationships FetchType.LAZY.
-    //The FetchType.LAZY tells Hibernate to only fetch the related entities from the database when you use the relationship. This is a good idea in general because there’s no reason to select entities you don’t need for your uses case.
+public class Comment extends AuditModel implements Serializable {
     //-------https://www.thoughts-on-java.org/entity-mappings-introduction-jpa-fetchtypes/-------
+
+
+
+    public Comment(){
+
+    }
+
+    public Comment(Post post) {
+        this.post = post;
+    }
+
+    public Comment(Long id, @NotNull String text, Post post) {
+        this.id = id;
+        this.text = text;
+        this.post = post;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,10 +35,8 @@ public class Comment extends AuditModel {
     @Lob
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+    @ManyToOne
+    @Nullable
     private Post post;
 
     public Long getId() {
@@ -52,6 +62,5 @@ public class Comment extends AuditModel {
     public void setPost(Post post) {
         this.post = post;
     }
-
 
 }

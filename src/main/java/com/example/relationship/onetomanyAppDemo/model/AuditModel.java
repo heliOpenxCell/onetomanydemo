@@ -21,6 +21,7 @@ import java.util.Date;
 
 public abstract class AuditModel implements Serializable {
     //@Temporal is a JPA annotation which can be used to store only TIME (java.sql.Time), DATE(java.sql.Date) or TIMESTAMP (java.sql.Timestamp) in the database table. Generally when we declare a Date field in the class and try to store it. It will store the timestamp in the database.
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate

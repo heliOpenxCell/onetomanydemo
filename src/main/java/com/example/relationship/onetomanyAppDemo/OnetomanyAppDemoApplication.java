@@ -12,4 +12,5 @@ public class OnetomanyAppDemoApplication {
 		System.out.println("Hello World");
 		SpringApplication.run(OnetomanyAppDemoApplication.class, args);
 	}
+
 }
